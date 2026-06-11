@@ -181,7 +181,7 @@
                 </div>
             `,
             choices: [' '],
-            post_trial_gap: 1000
+            post_trial_gap: 1000 // 教示終了後、1000msの空白時間を挟んで最初の注視点を表示
         };
         timeline.push(instructions);
 
@@ -198,13 +198,14 @@
             { text: "緑", color: "green", condition: "congruent", correct_response: "g" }
         ];
 
-        // 注視点 (+) 
+        // 注視点 (+)
         const fixation = {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: '<div class="fixation">+</div>',
             choices: "NO_KEYS",
             trial_duration: 500, // 仕様：500ms表示
-            data: { task: 'fixation' }
+            data: { task: 'fixation' },
+            post_trial_gap: 0 // 注視点消去後、即座に次の試行（文字刺激）を提示
         };
 
         // 本試行（刺激提示）
@@ -231,16 +232,16 @@
             }
         };
 
-        // 本試験の手続き構成（10試行）
+        // 本試験の手続き構成（10試行、注視点を復活させ、試行間の空白時間ITIを挿入）
         const test_procedure = {
-            timeline: [fixation, test_trial],
+            timeline: [fixation, test_trial], // 注視点(500ms)提示後に即テスト刺激へ移行するフロー
             timeline_variables: stroop_stimuli,
             randomize_order: true,
             sample: {
                 type: 'with-replacement',
-                size: 10 // 仕様：合計10試行
+                size: 10 // 合計10試行
             },
-            post_trial_gap: 1000 // 仕様：ITI (post_trial_gap) 1000ms
+            post_trial_gap: 1000 // キー応答後、次の注視点(+)へ移行する前に1000msの空白時間（ITI）を挟む
         };
         timeline.push(test_procedure);
 
@@ -276,7 +277,6 @@
             // 1. まず「JSON生データ形式」（e.postData.contents パース型GAS用）で送信
             console.log("送信試行 1/2: JSON型で送信しています...");
             try {
-                // mode: 'no-cors' を使用することでCORSエラーによる偽の「通信失敗(Reject)」判定を防ぎ、確実に送信を通します。
                 await fetch(url, {
                     method: "POST",
                     mode: "no-cors",
@@ -325,7 +325,7 @@
 
         // 実験終了時の処理（抽出・整形・自動送信）
         async function processAndSendData() {
-            // 不要な行（注視点、教示、ID入力）を除外し、task: 'response' である本試行のみを抽出
+            // 不要な行（教示、ID入力、注視点）を除外し、task: 'response' である本試行のみを抽出
             const relevant_data = jsPsych.data.get().filter({ task: 'response' });
             
             const data_array = relevant_data.values().map(trial => {
@@ -359,7 +359,7 @@
                     <h2 class="text-3xl font-extrabold text-gray-800 mb-4">実験終了</h2>
                     <p class="text-lg text-gray-600 mb-6">これで実験は終了です。お疲れ様でした。</p>
                     <p class="text-md text-blue-600 font-semibold mb-4">ただいまデータをGoogleスプレッドシートへ自動送信しています...</p>
-                    <p class="text-xs text-gray-400 mb-6">（データの衝突を防ぐため、時間差による2系統の送信方式を実行しています）</p>
+                    <p class="text-xs text-gray-400 mb-6">（データの衝突を防ぐため、時間差による2系統 of 送信方式を実行しています）</p>
                     <div class="loader"></div>
                 </div>
             `;
