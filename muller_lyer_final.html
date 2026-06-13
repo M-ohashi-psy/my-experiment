@@ -12,12 +12,12 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.2"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.2"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.2"></script>
   <script src="https://unpkg.com/@jspsych/plugin-canvas-slider-response@1.1.2"></script>
 
   <style>
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-      /* 水色、黄色、黄緑、白のさわやかなグラデーション（水色を広く） */
       background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 45%, #fef9c3 70%, #d9f99d 85%, #ffffff 100%);
       color: #1e40af;
       line-height: 1.6;
@@ -26,13 +26,14 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
+      padding: 10px;
     }
     #jspsych-target {
       width: 100%;
       max-width: 600px;
     }
     .jspsych-content {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       width: 100%;
     }
     #jspsych-canvas-stimulus {
@@ -43,23 +44,29 @@
       max-width: 500px;
       height: auto !important;
       display: block;
-      margin: 0 auto;
+      margin: 20px auto;
     }
-    /* スライダーのつまみを変更 */
+    /* スライダー全体を親要素に合わせて中央配置 */
+    .jspsych-canvas-slider-response-container {
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+    }
     input[type=range] {
       -webkit-appearance: none;
-      width: 80% !important;
+      width: 90% !important;
       max-width: 400px;
-      height: 10px;
+      height: 12px;
       background: #bae6fd;
       border-radius: 10px;
       margin: 20px auto;
       cursor: pointer;
+      display: block;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 28px;
-      width: 28px;
+      height: 32px;
+      width: 32px;
       border-radius: 50%;
       background: #0ea5e9;
       border: 4px solid #ffffff;
@@ -70,7 +77,7 @@
       transform: scale(1.1);
     }
     .jspsych-btn {
-      padding: 15px 40px !important;
+      padding: 16px 32px !important;
       font-size: 1.1rem !important;
       font-weight: 600 !important;
       border-radius: 9999px !important;
@@ -79,6 +86,8 @@
       border: none !important;
       box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2);
       transition: background-color 0.2s;
+      min-width: 120px;
+      margin-top: 10px;
     }
     .jspsych-btn:hover {
       background-color: #0284c7 !important;
@@ -110,19 +119,31 @@
     timeline.push({
       type: jsPsychSurveyText,
       preamble: '<h2 class="text-2xl font-bold mb-6 text-blue-900 text-center">実験参加登録</h2>',
-      questions: [{ prompt: '参加者IDを入力してください', required: true, name: 'subject_id' }],
+      questions: [{ prompt: 'はじめに、名前（またはID）を教えてください', required: true, name: 'subject_id' }],
       button_label: '次へ',
       on_finish: (data) => jsPsych.data.addProperties({ subject_id: data.response.subject_id, timestamp: new Date().toISOString() })
     });
 
     timeline.push({
+      type: jsPsychSurveyMultiChoice,
+      preamble: '<h2 class="text-2xl font-bold mb-6 text-blue-900 text-center">使用環境について</h2>',
+      questions: [{
+        prompt: 'いま、なにを使ってテストをしていますか？',
+        options: ['パソコン', 'スマホ', 'タブレット'],
+        required: true,
+        name: 'device_type'
+      }],
+      button_label: '次へ'
+    });
+
+    timeline.push({
       type: jsPsychHtmlButtonResponse,
       stimulus: `
-        <div class="text-center p-6">
+        <div class="text-center p-4">
           <h1 class="text-2xl font-bold mb-6 text-blue-950">ご協力ありがとうございます。</h1>
           <p class="mb-4 text-blue-900">これから短い視覚のテストを行います。</p>
-          <p class="mb-4 text-blue-900">画面に2つの矢印が表示されます。<br>下の矢印の長さをスライダーで調整して、上の矢印と同じ長さにしてください。</p>
-          <p class="font-bold text-blue-950">ピッタリ同じ長さに見えるところで、<br>【決定】ボタンを押してください。</p>
+          <p class="mb-4 text-blue-900">画面に2つの「矢印のような図形」が上下に並んで表示されます。<br>下の図形は、スライダーを動かすと長さが変わります。</p>
+          <p class="font-bold text-blue-950">「上の横線」と「下の横線」がピッタリ同じ長さに見えるところで、<br>【決定】ボタンを押してください。</p>
         </div>
       `,
       choices: ['開始する']
