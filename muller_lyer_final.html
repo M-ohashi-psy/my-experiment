@@ -17,9 +17,9 @@
 
   <style>
     body {
-      font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-      background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 45%, #fef9c3 70%, #d9f99d 85%, #ffffff 100%);
-      color: #1e40af;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #fdf5f2;
+      color: #6b5b57;
       line-height: 1.6;
       display: flex;
       justify-content: center;
@@ -37,16 +37,15 @@
       width: 100%;
     }
     #jspsych-canvas-stimulus {
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 24px;
-      box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.1);
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
       width: 100% !important;
       max-width: 500px;
       height: auto !important;
       display: block;
       margin: 20px auto;
     }
-    /* スライダー全体を親要素に合わせて中央配置 */
     .jspsych-canvas-slider-response-container {
       display: flex !important;
       justify-content: center !important;
@@ -56,41 +55,33 @@
       -webkit-appearance: none;
       width: 90% !important;
       max-width: 400px;
-      height: 12px;
-      background: #bae6fd;
-      border-radius: 10px;
-      margin: 20px auto;
+      height: 6px;
+      background: #e5d7d3;
+      border-radius: 3px;
+      margin: 30px auto;
       cursor: pointer;
       display: block;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 32px;
-      width: 32px;
+      height: 20px;
+      width: 20px;
       border-radius: 50%;
-      background: #0ea5e9;
-      border: 4px solid #ffffff;
-      box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3);
+      background: #c8b4b0;
+      border: 2px solid #ffffff;
       transition: transform 0.2s;
     }
-    input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
-    }
     .jspsych-btn {
-      padding: 16px 32px !important;
-      font-size: 1.1rem !important;
-      font-weight: 600 !important;
-      border-radius: 9999px !important;
-      background-color: #0ea5e9 !important;
+      padding: 12px 30px !important;
+      font-size: 1rem !important;
+      border-radius: 4px !important;
+      background-color: #c8b4b0 !important;
       color: white !important;
       border: none !important;
-      box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2);
-      transition: background-color 0.2s;
-      min-width: 120px;
-      margin-top: 10px;
+      transition: opacity 0.2s;
     }
     .jspsych-btn:hover {
-      background-color: #0284c7 !important;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -118,17 +109,17 @@
 
     timeline.push({
       type: jsPsychSurveyText,
-      preamble: '<h2 class="text-2xl font-bold mb-6 text-blue-900 text-center">実験参加登録</h2>',
-      questions: [{ prompt: 'はじめに、名前（またはID）を教えてください', required: true, name: 'subject_id' }],
+      preamble: '<h2 class="text-xl font-medium mb-6">実験参加登録</h2>',
+      questions: [{ prompt: '名前（またはID）を入力してください', required: true, name: 'subject_id' }],
       button_label: '次へ',
       on_finish: (data) => jsPsych.data.addProperties({ subject_id: data.response.subject_id, timestamp: new Date().toISOString() })
     });
 
     timeline.push({
       type: jsPsychSurveyMultiChoice,
-      preamble: '<h2 class="text-2xl font-bold mb-6 text-blue-900 text-center">使用環境について</h2>',
+      preamble: '<h2 class="text-xl font-medium mb-6">使用環境</h2>',
       questions: [{
-        prompt: 'いま、なにを使ってテストをしていますか？',
+        prompt: '使用しているデバイスを選択してください',
         options: ['パソコン', 'スマホ', 'タブレット'],
         required: true,
         name: 'device_type'
@@ -140,10 +131,8 @@
       type: jsPsychHtmlButtonResponse,
       stimulus: `
         <div class="text-center p-4">
-          <h1 class="text-2xl font-bold mb-6 text-blue-950">ご協力ありがとうございます。</h1>
-          <p class="mb-4 text-blue-900">これから短い視覚のテストを行います。</p>
-          <p class="mb-4 text-blue-900">画面に2つの「矢印のような図形」が上下に並んで表示されます。<br>下の図形は、スライダーを動かすと長さが変わります。</p>
-          <p class="font-bold text-blue-950">「上の横線」と「下の横線」がピッタリ同じ長さに見えるところで、<br>【決定】ボタンを押してください。</p>
+          <h1 class="text-xl font-medium mb-6">視覚テスト</h1>
+          <p class="mb-4">これから短い視覚のテストを行います。<br>上の線と下の線が同じ長さに見えるように、スライダーを操作して調整してください。</p>
         </div>
       `,
       choices: ['開始する']
@@ -155,7 +144,7 @@
       
       ctx.beginPath();
       ctx.moveTo(x_start, y); ctx.lineTo(x_end, y);
-      ctx.lineWidth = 4; ctx.strokeStyle = '#1e3a8a'; ctx.lineCap = 'round'; ctx.stroke();
+      ctx.lineWidth = 2; ctx.strokeStyle = '#6b5b57'; ctx.lineCap = 'round'; ctx.stroke();
       
       ctx.beginPath();
       if (is_inner) {
@@ -188,14 +177,23 @@
         type: jsPsychCanvasSliderResponse,
         stimulus: (c, val) => drawScene(c, val, config),
         canvas_size: [CANVAS_HEIGHT, CANVAS_WIDTH],
-        slider_start: 200, min: 50, max: 350,
-        prompt: `<p class="text-sm text-blue-700 mb-4 font-medium">現在 ${i + 1} 回目 / 全 12 回</p>`,
+        slider_start: 200, 
+        min: 50, 
+        max: 350,
+        prompt: `<p class="text-xs text-gray-400 mt-2">第 ${i + 1} 問 / 12問</p>`,
         button_label: '決定',
+        response_allowed_while_playing: true,
         on_load: function() {
-          const s = document.getElementById('jspsych-canvas-slider-response-response');
+          const s = document.querySelector('input[type="range"]');
           const c = document.getElementById('jspsych-canvas-stimulus');
-          drawScene(c, s.value, config);
-          s.addEventListener('input', () => drawScene(c, s.value, config));
+          if (s && c) {
+            // 初期描画
+            drawScene(c, s.value, config);
+            // 操作時描画
+            s.addEventListener('input', (e) => {
+              drawScene(c, e.target.value, config);
+            });
+          }
         },
         on_finish: (d) => { d.pse = d.response; d.error_amount = d.response - STANDARD_LENGTH; }
       });
@@ -204,9 +202,9 @@
     jsPsych.run(timeline);
 
     function submitDataAndShowResults(data) {
-      document.body.innerHTML = '<div class="p-10 text-center text-blue-950 font-bold">データを送信中...</div>';
+      document.body.innerHTML = '<div class="p-10 text-center">送信中...</div>';
       fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data.values()) })
-      .finally(() => { document.body.innerHTML = '<div class="p-10 text-center text-xl text-blue-950 font-bold">実験終了です。<br>ご協力ありがとうございました。</div>'; });
+      .finally(() => { document.body.innerHTML = '<div class="p-10 text-center">終了しました。<br>ご協力ありがとうございました。</div>'; });
     }
   </script>
 </body>
