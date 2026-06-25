@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>尚絅学院大学 2412A14の心理学実験室</title>
+    <title>尚絅学院大学 大橋の心理学実験室</title>
     <style>
         :root {
-            /* 水色ベースのカラーパレットに変更 */
-            --bg-color: #f0f7fb;
+            /* ピンクベージュベースのカラーパレット */
+            --bg-color: #fdf5f2;
             --card-bg: #ffffff;
-            --primary-color: #89c2d9;
-            --secondary-color: #a8c4dc;
-            --text-color: #4a5c66;
-            --accent-color: #5b9dbf;
+            --primary-color: #dcb8ae;
+            --secondary-color: #c49a8f;
+            --text-color: #5a4a46;
+            --accent-color: #b58b80;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,19 +25,19 @@
             padding: 2rem;
         }
 
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 960px; margin: 0 auto; }
 
         header { text-align: center; margin-bottom: 3rem; padding: 2rem 0; }
 
         h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem; }
 
         .greeting {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.6);
             padding: 1.5rem;
             border-radius: 12px;
             margin-bottom: 3rem;
             text-align: center;
-            border: 1px solid #dce9f0;
+            border: 1px solid #efe3e0;
         }
 
         .experiment-grid {
@@ -77,23 +77,24 @@
             border: 2px solid transparent;
         }
 
-        /* メインアクション用：水色強調 */
+        /* メインアクション用：ピンクベージュ強調 */
         .btn-primary { background-color: var(--primary-color); color: white; }
         .btn-primary:hover { background-color: var(--accent-color); }
 
         /* プレレジ確認用：白抜きスタイル */
         .btn-outline { border-color: var(--primary-color); color: var(--primary-color); background: white; }
-        .btn-outline:hover { background: var(--primary-color); color: white; }
+        .btn-outline:hover { background-color: var(--primary-color); color: white; }
 
         /* 履歴確認用：控えめなテキストスタイル */
         .history-link {
             text-align: center;
             font-size: 0.85rem;
-            color: #888;
+            color: #a8958f;
             text-decoration: underline;
             margin-top: 0.5rem;
+            min-height: 1.2em;
         }
-        .history-link:hover { color: #555; }
+        .history-link:hover { color: #5a4a46; }
 
         @media (max-width: 600px) { body { padding: 1rem; } h1 { font-size: 1.5rem; } }
     </style>
@@ -102,7 +103,7 @@
 
     <div class="container">
         <header>
-            <h1>尚絅学院大学 2412A14の心理学実験室</h1>
+            <h1>尚絅学院大学 大橋の心理学実験室</h1>
         </header>
 
         <section class="greeting">
@@ -118,6 +119,8 @@
                 </div>
                 <div class="btn-group">
                     <a href="hello_world.html" class="btn btn-primary">Hello Worldを見る</a>
+                    <div class="btn-outline" style="visibility:hidden; padding: 0.8rem 1.5rem;">スペース調整</div>
+                    <div class="history-link" style="visibility:hidden;">スペース調整</div>
                 </div>
             </article>
 
@@ -128,6 +131,8 @@
                 </div>
                 <div class="btn-group">
                     <a href="stroop.html" class="btn btn-primary">実験1に参加する</a>
+                    <div class="btn-outline" style="visibility:hidden; padding: 0.8rem 1.5rem;">スペース調整</div>
+                    <div class="history-link" style="visibility:hidden;">スペース調整</div>
                 </div>
             </article>
 
@@ -140,6 +145,18 @@
                     <a href="muller_lyer_final.html" class="btn btn-primary">実験2に参加する</a>
                     <a href="https://github.com/M-ohashi-psy/my-experiment/blob/main/preregistration.md" class="btn btn-outline">プレレジを確認する</a>
                     <a href="https://github.com/M-ohashi-psy/my-experiment/commits/main/preregistration.md" class="history-link">変更履歴（証拠）を確認する</a>
+                </div>
+            </article>
+
+            <article class="card">
+                <div>
+                    <h2>実験3：N-Back課題</h2>
+                    <p>N個前に出たものと同じかを判断する、ワーキングメモリ―を測定するテストです。（所要時間：約3分）</p>
+                </div>
+                <div class="btn-group">
+                    <a href="nback.html" class="btn btn-primary">実験3に参加する</a>
+                    <div class="btn-outline" style="visibility:hidden; padding: 0.8rem 1.5rem;">スペース調整</div>
+                    <div class="history-link" style="visibility:hidden;">スペース調整</div>
                 </div>
             </article>
         </main>
