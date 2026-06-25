@@ -6,11 +6,13 @@
     <title>尚絅学院大学 2412A14の心理学実験室</title>
     <style>
         :root {
-            --bg-color: #fdf5f2;
+            /* 水色ベースのカラーパレットに変更 */
+            --bg-color: #f0f7fb;
             --card-bg: #ffffff;
-            --primary-color: #dcb8ae;
-            --text-color: #5a4a46;
-            --accent-color: #c49a8f;
+            --primary-color: #89c2d9;
+            --secondary-color: #a8c4dc;
+            --text-color: #4a5c66;
+            --accent-color: #5b9dbf;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,11 +32,12 @@
         h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem; }
 
         .greeting {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.7);
             padding: 1.5rem;
             border-radius: 12px;
             margin-bottom: 3rem;
             text-align: center;
+            border: 1px solid #dce9f0;
         }
 
         .experiment-grid {
@@ -60,19 +63,37 @@
 
         .card p { margin-bottom: 1.5rem; font-size: 0.95rem; }
 
+        /* ボタン群のコンテナ */
+        .btn-group { display: flex; flex-direction: column; gap: 0.75rem; }
+
         .btn {
             display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
             padding: 0.8rem 1.5rem;
             text-decoration: none;
             border-radius: 8px;
             text-align: center;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            border: 2px solid transparent;
         }
 
-        .btn:hover { background-color: var(--accent-color); }
+        /* メインアクション用：水色強調 */
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: var(--accent-color); }
+
+        /* プレレジ確認用：白抜きスタイル */
+        .btn-outline { border-color: var(--primary-color); color: var(--primary-color); background: white; }
+        .btn-outline:hover { background: var(--primary-color); color: white; }
+
+        /* 履歴確認用：控えめなテキストスタイル */
+        .history-link {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+            text-decoration: underline;
+            margin-top: 0.5rem;
+        }
+        .history-link:hover { color: #555; }
 
         @media (max-width: 600px) { body { padding: 1rem; } h1 { font-size: 1.5rem; } }
     </style>
@@ -95,7 +116,9 @@
                     <h2>実験0：はじめてのWebページ</h2>
                     <p>第2回で作成した記念すべき「Hello World」のページです。</p>
                 </div>
-                <a href="hello_world.html" class="btn">Hello Worldを見る</a>
+                <div class="btn-group">
+                    <a href="hello_world.html" class="btn btn-primary">Hello Worldを見る</a>
+                </div>
             </article>
 
             <article class="card">
@@ -103,7 +126,9 @@
                     <h2>実験1：ストループ課題</h2>
                     <p>「文字の意味」と「文字の色」の干渉を調べる、簡単なキーボード入力のテストです。（所要時間：約3分）</p>
                 </div>
-                <a href="stroop.html" class="btn">実験1に参加する</a>
+                <div class="btn-group">
+                    <a href="stroop.html" class="btn btn-primary">実験1に参加する</a>
+                </div>
             </article>
 
             <article class="card">
@@ -111,7 +136,11 @@
                     <h2>実験2：ミュラー・リヤー錯視</h2>
                     <p>図形の長さが違って見える錯覚を測る、スライダーを使った視覚のテストです。（所要時間：約2分）</p>
                 </div>
-                <a href="muller_lyer_final.html" class="btn">実験2に参加する</a>
+                <div class="btn-group">
+                    <a href="muller_lyer_final.html" class="btn btn-primary">実験2に参加する</a>
+                    <a href="https://github.com/M-ohashi-psy/my-experiment/blob/main/preregistration.md" class="btn btn-outline">プレレジを確認する</a>
+                    <a href="https://github.com/M-ohashi-psy/my-experiment/commits/main/preregistration.md" class="history-link">変更履歴（証拠）を確認する</a>
+                </div>
             </article>
         </main>
     </div>
